@@ -1,0 +1,14 @@
+version: '3.5'
+
+services:
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:13.0.1
+    container_name: keycloak
+    ports:
+      -  8080:8080
+    environment:
+      KEYCLOAK_USER: "admin"
+      KEYCLOAK_PASSWORD: "admin"
+      PROXY_ADDRESS_FORWARDING: "true"
+    command: "-Dkeycloak.profile.feature.upload_scripts=enabled"
