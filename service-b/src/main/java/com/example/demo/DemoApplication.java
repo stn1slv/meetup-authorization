@@ -15,4 +15,9 @@ public class DemoApplication {
 		SpringApplication.run(DemoApplication.class, args);
 	}
 
+	@KafkaListener(topics = "a_messages")
+	public void listen(String in) {
+		logger.info("New message received: "+in);
+	}
+
 }

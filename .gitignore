@@ -49,6 +49,7 @@ buildNumber.properties
 *.code-workspace
 .project
 .settings
+.vscode/
 
 # Local History for Visual Studio Code
 .history/
