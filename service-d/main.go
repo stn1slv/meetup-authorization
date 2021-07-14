@@ -8,9 +8,10 @@ import (
 	"log"
 	"net/http"
 	"strings"
+	"time"
 )
 
-type Permission struct {
+type permission struct {
 	Claims       map[string]string `json:"claims,omitempty"`
 	ResourceID   string            `json:"rsid,omitempty"`
 	ResourceName string            `json:"rsname,omitempty"`
@@ -32,57 +33,58 @@ func main() {
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
 	accessToken, err := getBearerToken(r)
 	if err != nil {
 		w.WriteHeader(http.StatusUnauthorized)
 		return
 	}
+	//TODO change
 	keyCloakTokenEndpoint := "http://keycloak:8080/auth/realms/kafka-authz/protocol/openid-connect/token"
-	permissionsArray, err := getPermissions(accessToken, "service-d", keyCloakTokenEndpoint)
-	permissionsMap, err := getPermissionsMap(*permissionsArray)
-	fmt.Println(permissionsMap)
 
-	if strings.Contains(permissionsMap[r.URL.Path], r.Method) {
-		fmt.Println("TRUE")
-	} else {
-		fmt.Println("FALSE")
-	}
+	permissions, err := getPermissions(accessToken, "service-d", keyCloakTokenEndpoint)
 
 	if err != nil {
 		w.WriteHeader(http.StatusUnauthorized)
 		return
 	}
-
-	w.Write([]byte("This is an listener server.\n"))
+	// Check permissions
+	if strings.Contains(permissions[r.URL.Path], r.Method) {
+		w.Header().Add("Content-Type", "text/plain")
+		w.Write([]byte("ServiceD. Current time is " + (time.Now().Format("2006.01.02 15:04:05"))))
+	} else {
+		w.WriteHeader(http.StatusForbidden)
+	}
 }
 
 func getBearerToken(r *http.Request) (string, error) {
 	authHeader := r.Header.Get("Authorization")
 	if authHeader == "" {
-		return "", fmt.Errorf("Authorization header didn't provide")
+		return "", fmt.Errorf("Authorization header doen't provide")
 	}
 	splitToken := strings.Split(authHeader, "Bearer ")
 	if len(splitToken) != 2 {
-		return "", fmt.Errorf("Authorization header provided but it looks like non bearer type")
+		return "", fmt.Errorf("Authorization header provided but it's not bearer type")
 	}
 	return splitToken[1], nil
 }
 
-func getPermissions(assessToken string, audience string, keyCloakTokenEndpoint string) (*[]Permission, error) {
+func getPermissions(assessToken string, audience string, keyCloakTokenEndpoint string) (map[string]string, error) {
+	client := &http.Client{}
+
 	payload := strings.NewReader("audience=" + audience + "&grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Auma-ticket&response_mode=permissions")
 
-	client := &http.Client{}
 	req, err := http.NewRequest("POST", keyCloakTokenEndpoint, payload)
 
 	if err != nil {
 		fmt.Println(err)
 		return nil, err
 	}
+
 	req.Header.Add("Authorization", "Bearer "+assessToken)
 	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 
 	res, err := client.Do(req)
+
 	if err != nil {
 		fmt.Println(err)
 		return nil, err
@@ -95,22 +97,21 @@ func getPermissions(assessToken string, audience string, keyCloakTokenEndpoint s
 		return nil, err
 	}
 
-	fmt.Println(string(body))
-	var permissions []Permission
+	permissionsMap := make(map[string]string)
 
+	if res.StatusCode == 401 {
+		return nil, fmt.Errorf("Token invalid")
+	} else if res.StatusCode == 403 {
+		return permissionsMap, nil
+		// return nil, fmt.Errorf("Does not any permission")
+	}
+
+	var permissions []permission
 	json.Unmarshal(body, &permissions)
 
-	//TODO: invalid token or not permissions
-	if res.StatusCode >= 300 {
-		return &permissions, fmt.Errorf("Token invalid")
-	}
-	return &permissions, nil
-}
-
-func getPermissionsMap(permissions []Permission) (map[string]string, error) {
-	result := make(map[string]string)
 	for _, permission := range permissions {
-		result[permission.ResourceName] = strings.Join(permission.Scopes, ",")
+		permissionsMap[permission.ResourceName] = strings.Join(permission.Scopes, ",")
 	}
-	return result, nil
+
+	return permissionsMap, nil
 }
