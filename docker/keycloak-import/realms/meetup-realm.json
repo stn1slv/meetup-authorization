@@ -664,7 +664,7 @@
               "decisionStrategy": "UNANIMOUS",
               "config": {
                 "resources": "[\"Topic:a_*\"]",
-                "scopes": "[\"Write\",\"Describe\"]",
+                "scopes": "[\"Write\",\"Create\",\"Describe\"]",
                 "applyPolicies": "[\"service-a\"]"
               }
             },
