@@ -98,6 +98,45 @@
         }
       ]
     },
+	"roles": {
+    "realm": [
+      {
+        "name": "Dev Team A",
+        "description": "Developer on Dev Team A"
+      },
+      {
+        "name": "Dev Team B",
+        "description": "Developer on Dev Team B"
+      },
+      {
+        "name": "Ops Team",
+        "description": "Operations team member"
+      }
+    ],
+    "client": {
+      "team-a-client": [],
+      "team-b-client": [],
+      "kafka-cli": [],
+      "kafka": [
+        {
+          "name": "uma_protection",
+          "clientRole": true
+        }
+      ]
+    }
+  },
+  "groups" : [
+    {
+      "name" : "ClusterManager Group",
+      "path" : "/ClusterManager Group"
+    }, {
+      "name" : "ClusterManager-my-cluster Group",
+      "path" : "/ClusterManager-my-cluster Group"
+    }, {
+      "name" : "Ops Team Group",
+      "path" : "/Ops Team Group"
+    }
+  ],
     "users": [
       {
         "createdTimestamp": 1626231290115,
