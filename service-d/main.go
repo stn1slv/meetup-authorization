@@ -103,7 +103,7 @@ func getPermissions(assessToken string, audience string, keyCloakTokenEndpoint s
 		return nil, fmt.Errorf("Token invalid")
 	} else if res.StatusCode == 403 {
 		return permissionsMap, nil
-		// return nil, fmt.Errorf("Does not any permission")
+		// return nil, fmt.Errorf("Does not have any permission")
 	}
 
 	var permissions []permission
