@@ -483,14 +483,13 @@
               "ownerManagedAccess": false,
               "displayName": "Topics that start with a_",
               "attributes": {},
-              "_id": "58eb6de8-d9be-43b4-aeb5-3b4431f1a4c1",
               "uris": [],
               "scopes": [
                 {
-                  "name": "Create"
+                  "name": "Delete"
                 },
                 {
-                  "name": "Delete"
+                  "name": "Create"
                 },
                 {
                   "name": "Write"
@@ -538,14 +537,13 @@
               "ownerManagedAccess": false,
               "displayName": "Topics that start with x_",
               "attributes": {},
-              "_id": "2b0a315a-06cb-4d5c-86a2-9dd0d3315806",
               "uris": [],
               "scopes": [
                 {
-                  "name": "Create"
+                  "name": "Delete"
                 },
                 {
-                  "name": "Delete"
+                  "name": "Create"
                 },
                 {
                   "name": "Write"
@@ -573,7 +571,6 @@
               "ownerManagedAccess": false,
               "displayName": "Groups that start with a_",
               "attributes": {},
-              "_id": "8798d1f5-596e-479e-bdfa-45a0ee92fc6d",
               "uris": [],
               "scopes": [
                 {
@@ -590,7 +587,6 @@
               "ownerManagedAccess": false,
               "displayName": "Any group",
               "attributes": {},
-              "_id": "30a0d71e-c618-450b-b8f8-ed06666738cf",
               "uris": [],
               "scopes": [
                 {
@@ -613,14 +609,13 @@
               "ownerManagedAccess": false,
               "displayName": "Any topic",
               "attributes": {},
-              "_id": "c0cc74c1-2326-4fe7-a6d7-dbc83936b9ca",
               "uris": [],
               "scopes": [
                 {
-                  "name": "Create"
+                  "name": "Delete"
                 },
                 {
-                  "name": "Delete"
+                  "name": "Create"
                 },
                 {
                   "name": "Write"
@@ -641,301 +636,57 @@
                   "name": "AlterConfigs"
                 }
               ]
-            },
-            {
-              "name": "kafka-cluster:my-cluster,Topic:b_*",
-              "type": "Topic",
-              "ownerManagedAccess": false,
-              "attributes": {},
-              "_id": "f3c01d34-f1ca-4eeb-9b7c-d8b85763616c",
-              "uris": [],
-              "scopes": [
-                {
-                  "name": "Create"
-                },
-                {
-                  "name": "Delete"
-                },
-                {
-                  "name": "Write"
-                },
-                {
-                  "name": "Describe"
-                },
-                {
-                  "name": "Alter"
-                },
-                {
-                  "name": "Read"
-                },
-                {
-                  "name": "DescribeConfigs"
-                },
-                {
-                  "name": "AlterConfigs"
-                }
-              ]
-            },
-            {
-              "name": "kafka-cluster:my-cluster,Cluster:*",
-              "type": "Cluster",
-              "ownerManagedAccess": false,
-              "displayName": "Cluster scope on my-cluster",
-              "attributes": {},
-              "_id": "f50302f4-6a33-45a9-a3f7-a36bafcc5422",
-              "uris": [],
-              "scopes": [
-                {
-                  "name": "DescribeConfigs"
-                },
-                {
-                  "name": "AlterConfigs"
-                },
-                {
-                  "name": "ClusterAction"
-                }
-              ]
-            },
-            {
-              "name": "kafka-cluster:my-cluster,Group:*",
-              "type": "Group",
-              "ownerManagedAccess": false,
-              "displayName": "Any group on my-cluster",
-              "attributes": {},
-              "_id": "81c44ddf-b8a3-454a-805d-fb6aac34ec9e",
-              "uris": [],
-              "scopes": [
-                {
-                  "name": "Delete"
-                },
-                {
-                  "name": "Describe"
-                },
-                {
-                  "name": "Read"
-                },
-                {
-                  "name": "DescribeConfigs"
-                },
-                {
-                  "name": "AlterConfigs"
-                }
-              ]
-            },
-            {
-              "name": "kafka-cluster:my-cluster,Topic:*",
-              "type": "Topic",
-              "ownerManagedAccess": false,
-              "displayName": "Any topic on my-cluster",
-              "attributes": {},
-              "_id": "0943c4ba-ee00-4630-aa2e-a6077a9eb086",
-              "uris": [],
-              "scopes": [
-                {
-                  "name": "Create"
-                },
-                {
-                  "name": "Delete"
-                },
-                {
-                  "name": "Write"
-                },
-                {
-                  "name": "Describe"
-                },
-                {
-                  "name": "IdempotentWrite"
-                },
-                {
-                  "name": "Alter"
-                },
-                {
-                  "name": "Read"
-                },
-                {
-                  "name": "DescribeConfigs"
-                },
-                {
-                  "name": "AlterConfigs"
-                }
-              ]
-            },
-            {
-              "name": "Cluster:*",
-              "type": "Cluster",
-              "ownerManagedAccess": false,
-              "attributes": {},
-              "_id": "58dc508c-0fad-4991-9644-a5a634c9be80",
-              "uris": []
             }
           ],
           "policies": [
             {
-              "name": "Dev Team A",
-              "type": "role",
+              "name": "service-a",
+              "type": "client",
               "logic": "POSITIVE",
               "decisionStrategy": "UNANIMOUS",
               "config": {
-                "roles": "[{\"id\":\"Dev Team A\",\"required\":true}]"
+                "clients": "[\"service-a\"]"
               }
             },
             {
-              "name": "Dev Team B",
-              "type": "role",
+              "name": "service-b",
+              "type": "client",
               "logic": "POSITIVE",
               "decisionStrategy": "UNANIMOUS",
               "config": {
-                "roles": "[{\"id\":\"Dev Team B\",\"required\":true}]"
+                "clients": "[\"service-b\"]"
               }
             },
             {
-              "name": "Ops Team",
-              "type": "role",
-              "logic": "POSITIVE",
-              "decisionStrategy": "UNANIMOUS",
-              "config": {
-                "roles": "[{\"id\":\"Ops Team\",\"required\":true}]"
-              }
-            },
-            {
-              "name": "ClusterManager Group",
-              "type": "group",
-              "logic": "POSITIVE",
-              "decisionStrategy": "UNANIMOUS",
-              "config": {
-                "groups": "[{\"path\":\"/ClusterManager Group\",\"extendChildren\":false}]"
-              }
-            },
-            {
-              "name": "ClusterManager of my-cluster Group",
-              "type": "group",
-              "logic": "POSITIVE",
-              "decisionStrategy": "UNANIMOUS",
-              "config": {
-                "groups": "[{\"path\":\"/ClusterManager-my-cluster Group\",\"extendChildren\":false}]"
-              }
-            },
-            {
-              "name": "Dev Team A owns topics that start with a_ on any cluster",
-              "type": "resource",
+              "name": "Service-a can write to topics a_*",
+              "type": "scope",
               "logic": "POSITIVE",
               "decisionStrategy": "UNANIMOUS",
               "config": {
                 "resources": "[\"Topic:a_*\"]",
-                "applyPolicies": "[\"Dev Team A\"]"
+                "scopes": "[\"Write\",\"Describe\"]",
+                "applyPolicies": "[\"service-a\"]"
               }
             },
             {
-              "name": "Dev Team A can write to topics that start with x_ on any cluster",
+              "name": "Service-b can read from topics a_*",
               "type": "scope",
               "logic": "POSITIVE",
               "decisionStrategy": "UNANIMOUS",
               "config": {
-                "resources": "[\"Topic:x_*\"]",
-                "scopes": "[\"Describe\",\"Write\"]",
-                "applyPolicies": "[\"Dev Team A\"]"
+                "resources": "[\"Topic:a_*\"]",
+                "scopes": "[\"Read\",\"Describe\"]",
+                "applyPolicies": "[\"service-b\"]"
               }
             },
             {
-              "name": "Dev Team B owns topics that start with b_ on cluster my-cluster",
-              "type": "resource",
-              "logic": "POSITIVE",
-              "decisionStrategy": "UNANIMOUS",
-              "config": {
-                "resources": "[\"kafka-cluster:my-cluster,Topic:b_*\"]",
-                "applyPolicies": "[\"Dev Team B\"]"
-              }
-            },
-            {
-              "name": "Dev Team B can read from topics that start with x_ on any cluster",
-              "type": "scope",
-              "logic": "POSITIVE",
-              "decisionStrategy": "UNANIMOUS",
-              "config": {
-                "resources": "[\"Topic:x_*\"]",
-                "scopes": "[\"Describe\",\"Read\"]",
-                "applyPolicies": "[\"Dev Team B\"]"
-              }
-            },
-            {
-              "name": "Dev Team B can update consumer group offsets that start with x_ on any cluster",
-              "type": "scope",
-              "logic": "POSITIVE",
-              "decisionStrategy": "UNANIMOUS",
-              "config": {
-                "resources": "[\"Group:x_*\"]",
-                "scopes": "[\"Describe\",\"Read\"]",
-                "applyPolicies": "[\"Dev Team B\"]"
-              }
-            },
-            {
-              "name": "Dev Team A can use consumer groups that start with a_ on any cluster",
+              "name": "Service-b can use consumer groups that start with a_",
               "type": "resource",
               "logic": "POSITIVE",
               "decisionStrategy": "UNANIMOUS",
               "config": {
                 "resources": "[\"Group:a_*\"]",
-                "applyPolicies": "[\"Dev Team A\"]"
-              }
-            },
-            {
-              "name": "ClusterManager of my-cluster Group has full access to topics on my-cluster",
-              "type": "resource",
-              "logic": "POSITIVE",
-              "decisionStrategy": "UNANIMOUS",
-              "config": {
-                "resources": "[\"kafka-cluster:my-cluster,Topic:*\"]",
-                "applyPolicies": "[\"ClusterManager of my-cluster Group\"]"
-              }
-            },
-            {
-              "name": "ClusterManager of my-cluster Group has full access to consumer groups on my-cluster",
-              "type": "resource",
-              "logic": "POSITIVE",
-              "decisionStrategy": "UNANIMOUS",
-              "config": {
-                "resources": "[\"kafka-cluster:my-cluster,Group:*\"]",
-                "applyPolicies": "[\"ClusterManager of my-cluster Group\"]"
-              }
-            },
-            {
-              "name": "ClusterManager of my-cluster Group has full access to cluster config on my-cluster",
-              "type": "resource",
-              "logic": "POSITIVE",
-              "decisionStrategy": "UNANIMOUS",
-              "config": {
-                "resources": "[\"kafka-cluster:my-cluster,Cluster:*\"]",
-                "applyPolicies": "[\"ClusterManager of my-cluster Group\"]"
-              }
-            },
-            {
-              "name": "ClusterManager Group has full access to manage and affect groups",
-              "type": "resource",
-              "logic": "POSITIVE",
-              "decisionStrategy": "UNANIMOUS",
-              "config": {
-                "resources": "[\"Group:*\"]",
-                "applyPolicies": "[\"ClusterManager Group\"]"
-              }
-            },
-            {
-              "name": "ClusterManager Group has full access to manage and affect topics",
-              "type": "resource",
-              "logic": "POSITIVE",
-              "decisionStrategy": "UNANIMOUS",
-              "config": {
-                "resources": "[\"Topic:*\"]",
-                "applyPolicies": "[\"ClusterManager Group\"]"
-              }
-            },
-            {
-              "name": "ClusterManager Group has full access to cluster config",
-              "type": "resource",
-              "logic": "POSITIVE",
-              "decisionStrategy": "UNANIMOUS",
-              "config": {
-                "resources": "[\"Cluster:*\"]",
-                "applyPolicies": "[\"ClusterManager Group\"]"
+                "applyPolicies": "[\"service-b\"]"
               }
             }
           ],

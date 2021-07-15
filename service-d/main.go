@@ -39,7 +39,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	//TODO change
-	keyCloakTokenEndpoint := "http://keycloak:8080/auth/realms/kafka-authz/protocol/openid-connect/token"
+	keyCloakTokenEndpoint := "http://keycloak:8080/auth/realms/meetup/protocol/openid-connect/token"
 
 	permissions, err := getPermissions(accessToken, "service-d", keyCloakTokenEndpoint)
 
