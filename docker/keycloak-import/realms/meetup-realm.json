@@ -658,6 +658,15 @@
               }
             },
             {
+              "name": "service-c",
+              "type": "client",
+              "logic": "POSITIVE",
+              "decisionStrategy": "UNANIMOUS",
+              "config": {
+                "clients": "[\"service-c\"]"
+              }
+            },
+            {
               "name": "Service-a can write to topics a_*",
               "type": "scope",
               "logic": "POSITIVE",
@@ -687,6 +696,17 @@
               "config": {
                 "resources": "[\"Group:a_*\"]",
                 "applyPolicies": "[\"service-b\"]"
+              }
+            },
+            {
+              "name": "Service-c can write to topics a_*",
+              "type": "scope",
+              "logic": "POSITIVE",
+              "decisionStrategy": "AFFIRMATIVE",
+              "config": {
+                "resources": "[\"Topic:a_*\"]",
+                "scopes": "[\"Write\",\"Describe\"]",
+                "applyPolicies": "[\"service-c\"]"
               }
             }
           ],
