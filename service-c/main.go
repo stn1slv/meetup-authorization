@@ -47,6 +47,11 @@ func send2kafka(msg string) (int32, int64, error) {
 	tokenURL := "http://keycloak:8080/auth/realms/meetup/protocol/openid-connect/token"
 
 	tokenProvider := oauth.NewTokenProvider(clientID, clientSecret, tokenURL)
+	accessToken, err := tokenProvider.Token()
+	if err != nil {
+		return 0, 0, err
+	}
+	log.Println(accessToken.Token)
 
 	return kafkaProducer(splitBrokers, tokenProvider, topic, msg)
 }
