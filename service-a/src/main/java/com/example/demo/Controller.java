@@ -20,7 +20,8 @@ public class Controller {
     @GetMapping("/send")
     public String sendMessageToKafka() {
         Integer requestId= new Random().nextInt(10000);
-        this.template.send("a_messages", "test message with id="+requestId);
+        String msg="test message with id="+requestId+" from service-a";
+        this.template.send("a_messages", msg);
         String result="Sent message with id="+requestId;
         logger.info(result);
         return result;
