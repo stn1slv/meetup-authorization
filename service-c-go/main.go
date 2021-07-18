@@ -1,12 +1,12 @@
 package main
 
 import (
+	"fmt"
 	"log"
-	"strconv"
-	"strings"
-
 	"math/rand"
 	"net/http"
+	"strconv"
+	"strings"
 
 	sarama "github.com/Shopify/sarama"
 	oauth "github.com/damiannolan/sasl/oauthbearer"
@@ -16,9 +16,11 @@ import (
 func main() {
 	r := chi.NewRouter()
 	// r.Use(middleware.Logger)
+
 	r.Get("/send2http", func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("sent to HTTP"))
 	})
+
 	r.Get("/send2kafka", func(w http.ResponseWriter, r *http.Request) {
 		requestId := rand.Intn(9000) + 999
 		msg := "test message with id=" + strconv.Itoa(requestId) + " from service-c"
@@ -37,37 +39,47 @@ func main() {
 }
 
 func send2kafka(msg string) (int32, int64, error) {
-	clientID := "service-c"
-	clientSecret := "service-c-secret"
-	tokenURL := "http://keycloak:8080/auth/realms/meetup/protocol/openid-connect/token"
 	splitBrokers := strings.Split("localhost:9092", ",")
 	topic := "a_messages"
 
+	clientID := "service-c"
+	clientSecret := "service-c-secret"
+	tokenURL := "http://keycloak:8080/auth/realms/meetup/protocol/openid-connect/token"
+
+	tokenProvider := oauth.NewTokenProvider(clientID, clientSecret, tokenURL)
+
+	return kafkaProducer(splitBrokers, tokenProvider, topic, msg)
+}
+
+func kafkaProducer(brokerList []string, tokenProvider sarama.AccessTokenProvider, topic string, msg string) (int32, int64, error) {
+
 	config := sarama.NewConfig()
 
-	config.Producer.RequiredAcks = sarama.WaitForAll // Wait for all in-sync replicas to ack the message
-	config.Producer.Retry.Max = 10                   // Retry up to 10 times to produce the message
-	config.Producer.Return.Successes = true
 	config.Version = sarama.MaxVersion
+
+	config.Producer.RequiredAcks = sarama.WaitForAll
+	config.Producer.Retry.Max = 10
+	config.Producer.Return.Successes = true
 
 	config.Net.SASL.Enable = true
 	config.Net.SASL.Mechanism = sarama.SASLTypeOAuth
-	config.Net.SASL.TokenProvider = oauth.NewTokenProvider(clientID, clientSecret, tokenURL)
+	config.Net.SASL.TokenProvider = tokenProvider
 
-	syncProducer, err := sarama.NewSyncProducer(splitBrokers, config)
+	syncProducer, err := sarama.NewSyncProducer(brokerList, config)
 	if err != nil {
-		log.Println("failed to create producer: ", err)
-		return 0, 0, err
+		// log.Println("failed to create producer: ", err)
+		return 0, 0, fmt.Errorf("failed to create producer: %v", err)
 	}
 	defer syncProducer.Close()
+
 	partition, offset, err := syncProducer.SendMessage(&sarama.ProducerMessage{
 		Topic: topic,
 		Value: sarama.StringEncoder(msg),
 	})
 	if err != nil {
-		log.Printf("failed to send message to %s: %e\n", topic, err)
-		return 0, 0, err
+		// log.Printf("failed to send message to %s: %e\n", topic, err)
+		return 0, 0, fmt.Errorf("failed to send message to %s: %v", topic, err)
 	}
-	log.Printf("wrote message at partition: %d, offset: %d\n", partition, offset)
+	log.Printf("wrote [%s] message at partition: %d, offset: %d\n", msg, partition, offset)
 	return partition, offset, nil
 }
