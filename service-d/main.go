@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"flag"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -19,34 +18,28 @@ type permission struct {
 }
 
 func main() {
-	var (
-		host string
-		port string
-	)
-
-	flag.StringVar(&host, "h", "0.0.0.0", "Listening host")
-	flag.StringVar(&port, "p", "8000", "Listening port")
-	flag.Parse()
-
 	http.HandleFunc("/", handler)
-	log.Fatal(http.ListenAndServe(host+":"+port, nil))
+	log.Fatal(http.ListenAndServe(":8000", nil))
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
+	keyCloakTokenEndpoint := "http://keycloak:8080/auth/realms/meetup/protocol/openid-connect/token"
+
 	accessToken, err := getBearerToken(r)
 	if err != nil {
 		w.WriteHeader(http.StatusUnauthorized)
+		w.Write([]byte(err.Error()))
 		return
 	}
-	//TODO change
-	keyCloakTokenEndpoint := "http://keycloak:8080/auth/realms/meetup/protocol/openid-connect/token"
 
 	permissions, err := getPermissions(accessToken, "service-d", keyCloakTokenEndpoint)
 
 	if err != nil {
 		w.WriteHeader(http.StatusUnauthorized)
+		w.Write([]byte(err.Error()))
 		return
 	}
+
 	// Check permissions
 	if strings.Contains(permissions[r.URL.Path], r.Method) {
 		w.Header().Add("Content-Type", "text/plain")
@@ -59,7 +52,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 func getBearerToken(r *http.Request) (string, error) {
 	authHeader := r.Header.Get("Authorization")
 	if authHeader == "" {
-		return "", fmt.Errorf("Authorization header doen't provide")
+		return "", fmt.Errorf("Authorization header didn't provide")
 	}
 	splitToken := strings.Split(authHeader, "Bearer ")
 	if len(splitToken) != 2 {
@@ -76,8 +69,7 @@ func getPermissions(assessToken string, audience string, keyCloakTokenEndpoint s
 	req, err := http.NewRequest("POST", keyCloakTokenEndpoint, payload)
 
 	if err != nil {
-		fmt.Println(err)
-		return nil, err
+		return nil, fmt.Errorf("failed to construct request: %v", err)
 	}
 
 	req.Header.Add("Authorization", "Bearer "+assessToken)
@@ -86,21 +78,19 @@ func getPermissions(assessToken string, audience string, keyCloakTokenEndpoint s
 	res, err := client.Do(req)
 
 	if err != nil {
-		fmt.Println(err)
-		return nil, err
+		return nil, fmt.Errorf("failed to execute request: %v", err)
 	}
 	defer res.Body.Close()
 
 	body, err := ioutil.ReadAll(res.Body)
 	if err != nil {
-		fmt.Println(err)
-		return nil, err
+		return nil, fmt.Errorf("failed to read response body: %v", err)
 	}
 
 	permissionsMap := make(map[string]string)
 
 	if res.StatusCode == 401 {
-		return nil, fmt.Errorf("Token invalid")
+		return nil, fmt.Errorf("invalid token")
 	} else if res.StatusCode == 403 {
 		return permissionsMap, nil
 		// return nil, fmt.Errorf("Does not have any permission")
