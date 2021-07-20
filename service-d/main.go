@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"net/http/httputil"
 	"strings"
 	"time"
 )
@@ -25,6 +26,7 @@ func main() {
 func handler(w http.ResponseWriter, r *http.Request) {
 	keyCloakTokenEndpoint := "http://keycloak:8080/auth/realms/meetup/protocol/openid-connect/token"
 
+	// Get JWT from request
 	accessToken, err := getBearerToken(r)
 	if err != nil {
 		w.WriteHeader(http.StatusUnauthorized)
@@ -32,6 +34,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// Get permissions from AuthServer (KeyCloak)
 	permissions, err := getPermissions(accessToken, "service-d", keyCloakTokenEndpoint)
 
 	if err != nil {
@@ -39,6 +42,9 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte(err.Error()))
 		return
 	}
+
+	// Log incoming HTTP request
+	logRequest(r)
 
 	// Check permissions
 	if strings.Contains(permissions[r.URL.Path], r.Method) {
@@ -104,4 +110,12 @@ func getPermissions(assessToken string, audience string, keyCloakTokenEndpoint s
 	}
 
 	return permissionsMap, nil
+}
+
+func logRequest(r *http.Request) {
+	requestDump, err := httputil.DumpRequest(r, true)
+	if err != nil {
+		fmt.Println(err)
+	}
+	log.Printf("---New HTTP request received---\n%s", requestDump)
 }
