@@ -1246,7 +1246,6 @@
               "name": "/v1/invoices",
               "ownerManagedAccess": false,
               "attributes": {},
-              "_id": "e056a55f-a261-4d2f-aafa-0707c347c3d2",
               "uris": [
                 "/v1/invoices"
               ],
@@ -1260,11 +1259,29 @@
               ]
             },
             {
+              "name": "/v1/invoices/{id}",
+              "ownerManagedAccess": false,
+              "attributes": {},
+              "uris": [
+                "/v1/invoices/{id}"
+              ],
+              "scopes": [
+                {
+                  "name": "GET"
+                },
+                {
+                  "name": "PUT"
+                },
+                {
+                  "name": "DELETE"
+                }
+              ]
+            },
+            {
               "name": "/v1/users",
               "ownerManagedAccess": false,
               "displayName": "/v1/users",
               "attributes": {},
-              "_id": "537235f3-6347-45d7-b596-71024061c7f9",
               "uris": [
                 "/v1/users"
               ],
@@ -1296,6 +1313,16 @@
               }
             },
             {
+              "name": "Invoice",
+              "type": "resource",
+              "logic": "POSITIVE",
+              "decisionStrategy": "AFFIRMATIVE",
+              "config": {
+                "resources": "[\"/v1/invoices/{id}\"]",
+                "applyPolicies": "[\"service-c\"]"
+              }
+            },
+            {
               "name": "Users",
               "type": "resource",
               "logic": "POSITIVE",
@@ -1312,6 +1339,12 @@
             },
             {
               "name": "GET"
+            },
+            {
+              "name": "PUT"
+            },
+            {
+              "name": "DELETE"
             }
           ],
           "decisionStrategy": "UNANIMOUS"
