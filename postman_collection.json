@@ -1,0 +1,432 @@
+{
+	"info": {
+		"_postman_id": "d505e4ad-8ce8-4c0c-aada-f88dd41f8a3d",
+		"name": "Meetup (AAA)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get permissions by Token (kafka)",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"user-agent": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI0SkhNbGlIR1BadE9MNGFzakY2d0RTSVhMSWMyTEFiWXhXMER6cTFHTkRzIn0.eyJleHAiOjE2MjY2MjI5MzIsImlhdCI6MTYyNjYyMjgxMiwianRpIjoiZTllOGJiZGQtZDk1ZS00MmNmLWI4MDItZTk1YzU3OWE1MzY0IiwiaXNzIjoiaHR0cDovL2tleWNsb2FrOjgwODAvYXV0aC9yZWFsbXMvbWVldHVwIiwic3ViIjoiZTBkYzM4ZGEtMzNjNS00Yjk0LWE0NTYtYmU1N2QyNzM0NDA4IiwidHlwIjoiQmVhcmVyIiwiYXpwIjoic2VydmljZS1jIiwiYWNyIjoiMSIsInNjb3BlIjoicHJvZmlsZSBlbWFpbCIsImNsaWVudEhvc3QiOiIxNzIuMjUuMC4xIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJjbGllbnRJZCI6InNlcnZpY2UtYyIsInByZWZlcnJlZF91c2VybmFtZSI6InNlcnZpY2UtYWNjb3VudC1zZXJ2aWNlLWMiLCJjbGllbnRBZGRyZXNzIjoiMTcyLjI1LjAuMSJ9.myOB6yBSgL7-LmRMhx8hm9TD4fz6ZbxAVlrd1C09_wM2YRbjZxfZK_Nmb9fXuVjB9xBjcxB5pNskX0JXbdJKw43MrphqURU5Mp6hLg9iTKF9wNm7Uhks6aFvS8uH6XTB3vMbxGxQ9KWJ1XQA4jyXSN-3_2gia6QotidRPF9rCP8-FPbW2oTWM0ILb8fVDg67QMLEvro2o_3Z_nk4Y2b6gaPRq1BXidEqRnYW3yQ8zGm9gR40Wd0lGvVpn21R6utiASOAUfnXyF21Rg-weIEiiKtkXyOsZODw9D8gflw-dT8dkCUyo3tQaSHR22nevYsnL7Yz1DCrZuAGl2tHV2vjPQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Host",
+						"value": "keycloak-proxy:8080",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "audience",
+							"value": "kafka",
+							"type": "text"
+						},
+						{
+							"key": "grant_type",
+							"value": "urn:ietf:params:oauth:grant-type:uma-ticket",
+							"type": "text"
+						},
+						{
+							"key": "response_mode",
+							"value": "permissions",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://keycloak:8080/auth/realms/meetup/protocol/openid-connect/token",
+					"protocol": "http",
+					"host": [
+						"keycloak"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"realms",
+						"meetup",
+						"protocol",
+						"openid-connect",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get permissions by Token (service-d)",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"user-agent": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI0SkhNbGlIR1BadE9MNGFzakY2d0RTSVhMSWMyTEFiWXhXMER6cTFHTkRzIn0.eyJleHAiOjE2MjY2MjI5MzIsImlhdCI6MTYyNjYyMjgxMiwianRpIjoiZTllOGJiZGQtZDk1ZS00MmNmLWI4MDItZTk1YzU3OWE1MzY0IiwiaXNzIjoiaHR0cDovL2tleWNsb2FrOjgwODAvYXV0aC9yZWFsbXMvbWVldHVwIiwic3ViIjoiZTBkYzM4ZGEtMzNjNS00Yjk0LWE0NTYtYmU1N2QyNzM0NDA4IiwidHlwIjoiQmVhcmVyIiwiYXpwIjoic2VydmljZS1jIiwiYWNyIjoiMSIsInNjb3BlIjoicHJvZmlsZSBlbWFpbCIsImNsaWVudEhvc3QiOiIxNzIuMjUuMC4xIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJjbGllbnRJZCI6InNlcnZpY2UtYyIsInByZWZlcnJlZF91c2VybmFtZSI6InNlcnZpY2UtYWNjb3VudC1zZXJ2aWNlLWMiLCJjbGllbnRBZGRyZXNzIjoiMTcyLjI1LjAuMSJ9.myOB6yBSgL7-LmRMhx8hm9TD4fz6ZbxAVlrd1C09_wM2YRbjZxfZK_Nmb9fXuVjB9xBjcxB5pNskX0JXbdJKw43MrphqURU5Mp6hLg9iTKF9wNm7Uhks6aFvS8uH6XTB3vMbxGxQ9KWJ1XQA4jyXSN-3_2gia6QotidRPF9rCP8-FPbW2oTWM0ILb8fVDg67QMLEvro2o_3Z_nk4Y2b6gaPRq1BXidEqRnYW3yQ8zGm9gR40Wd0lGvVpn21R6utiASOAUfnXyF21Rg-weIEiiKtkXyOsZODw9D8gflw-dT8dkCUyo3tQaSHR22nevYsnL7Yz1DCrZuAGl2tHV2vjPQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Host",
+						"value": "keycloak-proxy:8080",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "audience",
+							"value": "service-d",
+							"type": "text"
+						},
+						{
+							"key": "grant_type",
+							"value": "urn:ietf:params:oauth:grant-type:uma-ticket",
+							"type": "text"
+						},
+						{
+							"key": "response_mode",
+							"value": "permissions",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://keycloak:8080/auth/realms/meetup/protocol/openid-connect/token",
+					"protocol": "http",
+					"host": [
+						"keycloak"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"realms",
+						"meetup",
+						"protocol",
+						"openid-connect",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get token (service-a)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "client_id",
+							"value": "service-a",
+							"type": "text"
+						},
+						{
+							"key": "grant_type",
+							"value": "client_credentials",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "service-a-secret",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://keycloak:8080/auth/realms/meetup/protocol/openid-connect/token",
+					"protocol": "http",
+					"host": [
+						"keycloak"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"realms",
+						"meetup",
+						"protocol",
+						"openid-connect",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get token (service-b)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "client_id",
+							"value": "service-b",
+							"type": "text"
+						},
+						{
+							"key": "grant_type",
+							"value": "client_credentials",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "service-b-secret",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://keycloak:8080/auth/realms/meetup/protocol/openid-connect/token",
+					"protocol": "http",
+					"host": [
+						"keycloak"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"realms",
+						"meetup",
+						"protocol",
+						"openid-connect",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get token (service-c)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "client_id",
+							"value": "service-c",
+							"type": "text"
+						},
+						{
+							"key": "grant_type",
+							"value": "client_credentials",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "service-c-secret",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://keycloak:8080/auth/realms/meetup/protocol/openid-connect/token",
+					"protocol": "http",
+					"host": [
+						"keycloak"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"realms",
+						"meetup",
+						"protocol",
+						"openid-connect",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get token (service-d)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "client_id",
+							"value": "service-d",
+							"type": "text"
+						},
+						{
+							"key": "grant_type",
+							"value": "client_credentials",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "service-d-secret",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://keycloak:8080/auth/realms/meetup/protocol/openid-connect/token",
+					"protocol": "http",
+					"host": [
+						"keycloak"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"realms",
+						"meetup",
+						"protocol",
+						"openid-connect",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "service-a",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJ5Y2QycThNVTI2NWM3d2QxbjRYbHRlRGJFVUFrX1cyYWZoQzRTZXl6bGQ0In0.eyJleHAiOjE2MjYzNDg2MzQsImlhdCI6MTYyNjM0ODUxNCwianRpIjoiZjdlYzNlNzQtZjkwNS00MTc4LWFjYjItZGNkM2IyMmIxZDlkIiwiaXNzIjoiaHR0cDovL2tleWNsb2FrOjgwODAvYXV0aC9yZWFsbXMvbWVldHVwIiwic3ViIjoiNzVkNTA5YmItNWE5Zi00NzM1LWFlM2ItYTUwOTI5NDBlNzI5IiwidHlwIjoiQmVhcmVyIiwiYXpwIjoic2VydmljZS1jIiwiYWNyIjoiMSIsInNjb3BlIjoicHJvZmlsZSBlbWFpbCIsImNsaWVudElkIjoic2VydmljZS1jIiwiY2xpZW50SG9zdCI6IjE3Mi4xOC4wLjEiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsInByZWZlcnJlZF91c2VybmFtZSI6InNlcnZpY2UtYWNjb3VudC1zZXJ2aWNlLWMiLCJjbGllbnRBZGRyZXNzIjoiMTcyLjE4LjAuMSJ9.d0UFm_FV36Y2ACZ99cajZkOebbxlZnsJRy2koX7THz5mNKdGfWiBLACRxB07Fwy5KPKYj0fS3SCImvzj80R-9kRLDkCmxPa4b3jFFCouCHKNKnVXb9ewOyc2VHwkanrMqPHv62qLQOi7IR-SOerbJ0j24Oebw-IFzdYEjfSWyREeLUhm6W6q5YFAZgQIcOT436nFruc45NGLaX29h8EKLPSWTwKbkLNKNaolh5RR1MDBeBjl0mei06WwKJxYlDtxFpEHc833Go8ZH32g377fkr8oMiGYgPKLBYiulZYsq_RV4WP6LZv7KaEwGIjCA4R_Doi-FwamvMInUQvb-Gl6_g",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8282/send",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8282",
+					"path": [
+						"send"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "service-c (kafka)",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8383/send2kafka",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8383",
+					"path": [
+						"send2kafka"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "service-c (http)",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8383/send2http",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8383",
+					"path": [
+						"send2http"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "service-d",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJLY1JWY1gxZHVndVc0bnBYT3VQRzg1emdaeHVremx6Z2VSTDg3SHdvVWEwIn0.eyJleHAiOjE2MjY4MTI2NzcsImlhdCI6MTYyNjgxMjU1NywianRpIjoiZGZmYTNjMzYtMGUwYi00NTM5LWJlYTktYzJjOGJkODYzMTU0IiwiaXNzIjoiaHR0cDovL2tleWNsb2FrOjgwODAvYXV0aC9yZWFsbXMvbWVldHVwIiwic3ViIjoiYTdiZjEzNzktMTNmMy00Y2VjLTlmZGYtMDQwNDhmOTE3M2YwIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoic2VydmljZS1jIiwiYWNyIjoiMSIsInNjb3BlIjoicHJvZmlsZSBlbWFpbCIsImNsaWVudElkIjoic2VydmljZS1jIiwiY2xpZW50SG9zdCI6IjE3Mi4yNS4wLjEiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsInByZWZlcnJlZF91c2VybmFtZSI6InNlcnZpY2UtYWNjb3VudC1zZXJ2aWNlLWMiLCJjbGllbnRBZGRyZXNzIjoiMTcyLjI1LjAuMSJ9.gc5h6iRpOp3JxEcx1wxVovwlmtquQXYP_qiMXmDrr-paFjUIkssJ1wEn2lb5bWqSHE5DLMkDe7Mst5WI7WpMWKkgEKTiJwBQmPD9JpgwmJALNjM0Pd-aV9zGn3oWVmUTTDOv5diYO1SqYsnUh1xItV4DtsdWy68sCzp6KF3Wsj1PUD6qhgEkm6cO5lqgwh2OMIlt2cZizqCKzRtMxI_EeTd7AV0K4D0U6xpVuKpUO3e6y5KbjKOvvJiJplC9FBrfnViVEdXBf2pxgLZkzr4uNMIhWHAKdjTFjRASo1gsVei_FfN4JdOpm_JDNXhiOxDnebGlP0gEi1AQuojD_iMh_g",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/v1/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"v1",
+						"users"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
