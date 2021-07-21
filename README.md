@@ -1,5 +1,13 @@
 # Demo case
 ![Demo case](.img/demo-case.png?raw=true)
+## Preparing
+You have to add some entries to your /etc/hosts file:
+```
+127.0.0.1            keycloak
+127.0.0.1            kafka
+```
+That's needed for host resolution because Kafka brokers and Kafka clients connecting to Keycloak have to use the same hostname to ensure the compatibility of generated access tokens. Also, when Kafka client connects to Kafka broker running inside docker image, the broker will redirect the client to kafka:9092.
+
 ## Start infrastructure
 #### Cleanup
 
