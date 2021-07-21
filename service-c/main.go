@@ -64,6 +64,7 @@ func main() {
 		} else {
 			w.WriteHeader(http.StatusOK)
 			w.Write([]byte("RECEIVED: " + string(body)))
+			log.Printf("HTTP: received message [%s] from service-d", string(body))
 		}
 	})
 
@@ -116,6 +117,6 @@ func kafkaProducer(brokerList []string, tokenProvider sarama.AccessTokenProvider
 		return 0, 0, fmt.Errorf("failed to send message to %s: %v", topic, err)
 	}
 
-	log.Printf("wrote [%s] message at partition: %d, offset: %d\n", msg, partition, offset)
+	log.Printf("KAFKA: wrote message [%s] at partition: %d, offset: %d\n", msg, partition, offset)
 	return partition, offset, nil
 }
