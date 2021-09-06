@@ -33,6 +33,7 @@ docker-compose -f compose.yml -f keycloak/compose.yml -f keycloak-import/compose
 ## Run and test 
 
 #### Console tools
+:warning: Before using Kafka console apps, you should add strimzi libs to your Kafka libs directory. To do this, clone [strimzi-kafka-oauth repository](https://github.com/strimzi/strimzi-kafka-oauth) and follow the steps on [the link](https://github.com/strimzi/strimzi-kafka-oauth#building). 
 ###### Produce
 Service-A
 ```
