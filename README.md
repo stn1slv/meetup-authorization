@@ -1,6 +1,7 @@
 # Demo case
+The [presentation](presentation.pdf) from the meetup.
+
 ![Demo case](.img/demo-case.png?raw=true)
-[presentation](presentation.pdf)
 ## Preparing
 You have to add some entries to your ```/etc/hosts``` file:
 ```
