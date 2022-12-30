@@ -1,7 +1,8 @@
 # Demo case
 The [presentation](presentation.pdf) from the meetup.
 
-![Demo case](.img/demo-case.png?raw=true)
+![Demo case](.img/demo-case-light.png#gh-light-mode-only)
+![Demo case](.img/demo-case-dark.png#gh-dark-mode-only)
 ## Preparing
 You have to add some entries to your ```/etc/hosts``` file:
 ```
